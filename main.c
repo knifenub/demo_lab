@@ -16,23 +16,43 @@ int main()
 
     for (int i = 0; i < n_courses; i++)
     {
-        double marks;
+        int choice;
 
+        printf("%s: %s Completed?\n", courses[i].code, courses[i].name);
+        printf("1. YES.\n");
+        printf("2. NO.\n");
+        printf("Enter Choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 2)
+        {
+            results[i] = createIncompleteCourseResult(&courses[i]);
+            continue;
+        }
+
+        double marks;
         printf("Marks for %s: ", courses[i].name);
         scanf("%lf", &marks);
 
-        results[i] = createCourseResult(&courses[i], marks);
+        results[i] = createCompletedCourseResult(&courses[i], marks);
     }
 
     sortCourseResultsBySemester(results, n_courses);
 
+    printf("\nResults\n");
+
+    for (int i = 0; i < n_courses; i++)
+    {
+        viewCourseResult(results[i]);
+        printf("Grade: %s\n", getLetterGrade(results[i]));
+    }
+
     for (int semester = 1; semester <= 8; semester++)
     {
         CourseResult semesterResults[100];
-        int n_semester_results;
 
         filterCourseResultsBySemester(results, n_courses, semester, semesterResults);
-        n_semester_results = countCourseResultsBeforeNull(semesterResults, 100);
+        int n_semester_results = countCourseResultsBeforeNull(semesterResults, 100);
 
         if (n_semester_results > 0)
         {

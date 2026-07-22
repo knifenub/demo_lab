@@ -4,11 +4,25 @@
 
 Course nullCourse = {"NULL", "NULL", 0.0, 0};
 
-CourseResult createCourseResult(Course *course, double marks)
+CourseResult createCompletedCourseResult(Course *course, double marks)
 {
     CourseResult result;
+
     result.course = course;
     result.marks = marks;
+    result.completed = 1;
+
+    return result;
+}
+
+CourseResult createIncompleteCourseResult(Course *course)
+{
+    CourseResult result;
+
+    result.course = course;
+    result.marks = 0.0;
+    result.completed = 0;
+
     return result;
 }
 
@@ -37,14 +51,18 @@ void sortCourseResultsBySemester(CourseResult results[], int n_results)
 
 int lowerBound(CourseResult results[], int n_results, int semester)
 {
-    int l = 0, r = n_results - 1, mid;
+    int l = 0;
+    int r = n_results - 1;
+    int mid;
 
     while (l <= r)
     {
         mid = (l + r) / 2;
 
-        if (results[mid].course->semester >= semester) r = mid - 1;
-        else l = mid + 1;
+        if (results[mid].course->semester >= semester)
+            r = mid - 1;
+        else
+            l = mid + 1;
     }
 
     return l;
@@ -52,14 +70,18 @@ int lowerBound(CourseResult results[], int n_results, int semester)
 
 int upperBound(CourseResult results[], int n_results, int semester)
 {
-    int l = 0, r = n_results - 1, mid;
+    int l = 0;
+    int r = n_results - 1;
+    int mid;
 
     while (l <= r)
     {
         mid = (l + r) / 2;
 
-        if (results[mid].course->semester > semester) r = mid - 1;
-        else l = mid + 1;
+        if (results[mid].course->semester > semester)
+            r = mid - 1;
+        else
+            l = mid + 1;
     }
 
     return l;
@@ -77,7 +99,7 @@ void filterCourseResultsBySemester(CourseResult results[], int n_results, int se
         count++;
     }
 
-    filtered[count] = createCourseResult(&nullCourse, 0.0);
+    filtered[count] = createCompletedCourseResult(&nullCourse, 0.0);
 }
 
 int countCourseResultsBeforeNull(CourseResult results[], int n_results)
@@ -86,7 +108,9 @@ int countCourseResultsBeforeNull(CourseResult results[], int n_results)
 
     while (count < n_results)
     {
-        if (strcmp(results[count].course->code, null_course_code) == 0) return count;
+        if (strcmp(results[count].course->code, null_course_code) == 0)
+            return count;
+
         count++;
     }
 
@@ -99,6 +123,12 @@ void viewCourseResult(CourseResult result)
            result.course->code,
            result.course->name,
            result.course->credit);
+
+    if (!result.completed)
+    {
+        printf("Incomplete\n");
+        return;
+    }
 
     printf("Marks: %.2f\n", result.marks);
 }
