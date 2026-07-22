@@ -24,27 +24,33 @@ int testCGPA()
 
 int testGradePoint()
 {
-    Course course = createCourse("CSE 4107", "Structured Programming I", 3.0, 1);
-    CourseResult result = createCompletedCourseResult(&course, 240);
+    Course course =
+        createCourse("CSE 4107", "Structured Programming I", 3.0, 1);
+
+    CourseResult result =
+        createCompletedCourseResult(&course, 240);
 
     return getGradePoint(result) == 4.00;
 }
 
 int testLetterGrade()
 {
-    Course course = createCourse("CSE 4108", "Structured Programming I Lab", 1.5, 1);
-    CourseResult result = createCompletedCourseResult(&course, 105);
+    Course course =
+        createCourse("CSE 4108", "Structured Programming I Lab", 1.5, 1);
+
+    CourseResult result =
+        createCompletedCourseResult(&course, 105);
 
     return getLetterGrade(result)[0] == 'A' &&
            getLetterGrade(result)[1] == '-';
 }
 
-int testIncompleteGradePoint()
+int testRequiredGPA()
 {
-    Course course = createCourse("CSE 4203", "Discrete Mathematics", 3.0, 2);
-    CourseResult result = createIncompleteCourseResult(&course);
+    double required =
+        calculateRequiredGPA(3.50, 90, 3.60, 30);
 
-    return getGradePoint(result) == 0.0;
+    return required > 3.89 && required < 3.91;
 }
 
 int main()
@@ -64,10 +70,11 @@ int main()
     if (testLetterGrade()) passed++;
 
     total++;
-    if (testIncompleteGradePoint()) passed++;
+    if (testRequiredGPA()) passed++;
 
     printf("Passed %d/%d tests\n", passed, total);
 
     if (passed == total) return 0;
+
     return 1;
 }
