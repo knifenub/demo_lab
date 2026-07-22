@@ -1,0 +1,54 @@
+000 - Repository Setup
+=======================
+
+This is the very first thing you do, before any feature branch. It creates
+the project skeleton on the dev-to-be main branch and publishes the dev
+branch that every feature branches off of.
+
+Step 1 - Create and clone the repository
+-------------------------------------------
+Create a GitHub repository yourself, then clone it and enter the folder:
+
+    git clone <your-repository-URL>
+
+Step 2 - Copy the initial files
+-----------------------------------
+Copy every file in this folder into the root of your cloned project:
+
+  - main.c
+  - make.sh
+  - make.ps1
+  - test.sh
+  - test.ps1
+  - README.md
+  - features.txt
+  - .gitignore
+
+Step 3 - Compile and run the initial program
+-------------------------------------------------
+Linux / macOS:
+    chmod +x make.sh
+    ./make.sh
+    chmod +x calculator.out
+    ./calculator.out
+
+Windows (PowerShell):
+    .\make.ps1
+    .\calculator.exe
+
+It should print: In IUT, CGPA Matters!
+
+Step 4 - Commit and push the setup
+---------------------------------------
+    git add .
+    git commit -m "Setup project"
+    git push
+
+Step 5 - Create and publish the dev branch
+-----------------------------------------------
+    git branch dev
+    git switch dev
+    git push -u origin dev
+
+From here on, every feature is developed on its own branch made from dev.
+Go to ../001-prepare-course-module/instructions.txt next.
